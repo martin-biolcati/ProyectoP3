@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
 import {Camera} from 'expo-camera';
 import {db, storage} from '../../firebase/config';
-import { TouchableOpacity ,View, Text, StyleSheet} from 'react-native-web';
+import { TouchableOpacity ,View, Text, StyleSheet, Image} from 'react-native-web';
 
 class MyCamera extends Component{
     constructor(props){
         super(props),
-        this.state = { permisos: false, photo: '', showCamera: true}
+        this.state = { 
+            permisosDeHardware: false,
+            urlInternaFoto: '', 
+            mostrarLaCamara: true}
     }
 
     componentDidMount(){
@@ -14,7 +17,7 @@ class MyCamera extends Component{
         .then(res => {
             if (res.granted === true) {
                 this.setState({
-                    permisos: true
+                    permisosDeHardware: true
                 })
             }
         })
@@ -23,10 +26,10 @@ class MyCamera extends Component{
 
     sacarFoto(){
         this.metodosCamara.takePictureAsync()
-        .then( photo => {
+        .then( urlInternaFoto => {
             this.setState({
-                photo: photo.uri,
-                showCamera: false
+                urlInternaFoto: urlInternaFoto.uri,
+                mostrarLaCamara: false
             })
         })
         .catch(e => console.log(e))
@@ -34,15 +37,15 @@ class MyCamera extends Component{
 
     rechazarFoto(){
         this.setState({
-            showCamera: true,
+            mostrarLaCamara: true,
         })
     }
 
     aceptarFoto(){
-        fetch(this.state.photo)
+        fetch(this.state.urlInternaFoto)
         .then(res => res.blob())
         .then(image => {
-           const ref = storage.ref(`photo/${Date.now()}.jpg`)
+           const ref = storage.ref(`urlInternaFoto/${Date.now()}.jpg`)
            ref.put(image)
            .then( () => {
             ref.getDownloadURL()
@@ -56,39 +59,28 @@ class MyCamera extends Component{
     }
 
     render(){
-
-        console.log(this.state.photo)
         return (
             <>
-                {this.state.permisos ? 
-                this.state.showCamera ?
+                {this.state.permisosDeHardware ? 
+                this.state.mostrarLaCamara ?
                 <View style={styles.formContainer} >
                     <Camera style={styles.camera} type={Camera.Constants.Type.front} ref={metodosCamara => this.metodosCamara = metodosCamara}/>
-                    <TouchableOpacity
-                        style={styles.button}
-                         onPress={() => this.sacarFoto()}
-                        >
+                    <TouchableOpacity style={styles.button} onPress={() => this.sacarFoto()}>
                         <Text style={styles.textButton}>Sacar foto</Text>
                     </TouchableOpacity>
                 </View>
                 :
                 <View style={styles.formContainer}>
-                    <Image style={styles.camera} source={{uri: this.state.photo}} />
-                    <TouchableOpacity
-                        style={styles.button}
-                         onPress={() => this.aceptarFoto()}
-                        >
+                    <Image style={styles.camera} source={{uri: this.state.urlInternaFoto}} />
+                    <TouchableOpacity style={styles.button} onPress={() => this.aceptarFoto()}>
                         <Text style={styles.textButton}>Aceptar</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.button}
-                         onPress={() => this.rechazarFoto()}
-                        >
+                    <TouchableOpacity style={styles.button} onPress={() => this.rechazarFoto()}>
                         <Text style={styles.textButton}>Rechazar</Text>
                     </TouchableOpacity>
                 </View>
                 :
-                <Text>No me diste los permisos de la camara</Text>
+                <Text>No tenes permisos de la camara</Text>
                 }
             </>
         )

@@ -8,10 +8,12 @@ class PostForm extends Component {
         super()
         this.state={
            textoPost:'',
+           showCamera: true, 
+           url: ''
         }
     }
 
-    crearPost(owner, textoPost, createdAt){
+    crearPost(){
         db.collection('posts').add({
             owner: auth.currentUser.email,
             textoPost: this.state.textoPost,
@@ -23,21 +25,26 @@ class PostForm extends Component {
         .catch( e => console.log(e))
     }
 
+    onImageUpload(url){
+        this.setState({ url: url , showCamera: false});
+      }
+
 
     render(){
         return(
             <View style={styles.formContainer}>
-                <Text>Aca debajo está la cámara</Text>
-                <MyCamera />
+                <MyCamera onImageUpload={(url) => this.onImageUpload(url)} />     
                 <Text>New Post</Text>
                 <TextInput
-                    style={styles.input}
-                    onChangeText={(text)=>this.setState({textoPost: text})}
-                    placeholder='Escribir...'
-                    keyboardType='default'
-                    value={this.state.textoPost}
-                    />
-                <TouchableOpacity style={styles.button} onPress={()=>this.crearPost(auth.currentUser.email, this.state.textoPost, Date.now())}>
+                style={styles.input}
+                onChangeText={(text)=>this.setState({textoPost: text})}
+                placeholder='Escribir...'
+                keyboardType='default'
+                value={this.state.textoPost}
+                />
+               
+                <></>                
+                <TouchableOpacity style={styles.button} onPress={()=>this.crearPost()}>
                     <Text style={styles.textButton}>Postear</Text>    
                 </TouchableOpacity>
             </View>
