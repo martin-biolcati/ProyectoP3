@@ -3,13 +3,13 @@ import React, { Component } from "react";
 import { TextInput, TouchableOpacity, View, Text, StyleSheet, FlatList } from "react-native";
 
 
-import Home from "../screens/Home";
-import PostForm from "../screens/PostForm";
-import Profile from "../screens/Profile";
+import Home from "../../screens/Home/Home";
+import PostForm from "../../screens/PostForm/PostForm";
+import Profile from "../../screens/Profile/Profile";
 
 const Tab = createBottomTabNavigator();
 
-class Menu extends Component {
+class Navbar extends Component {
     constructor() {
       super();
       this.state = {

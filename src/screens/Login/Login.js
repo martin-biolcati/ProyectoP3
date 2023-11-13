@@ -15,12 +15,13 @@ class Login extends Component {
         auth.signInWithEmailAndPassword(email, pass)
             .then( response => {
                 console.log('Login ok', response);
-                this.props.navigation.navigate('Home')
-
+                this.props.navigation.navigate('Menu')
             })
             .catch( error => {
                 console.log(error);
             })
+    
+            
     }
 
     render(){

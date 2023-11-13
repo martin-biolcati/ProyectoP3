@@ -6,6 +6,7 @@ class Profile extends Component {
     constructor(){
         super()
         this.state={
+            mail: ''
         }
     }
 
@@ -20,14 +21,16 @@ class Profile extends Component {
     render(){
         return(
             <View style={styles.formContainer}>
+                <Text>Nombre del usuario:</Text>
+                <Text>Email:{auth.currentUser.email}</Text>
+                <Text>Mini Bio:</Text>
+                <Text>Foto de perfil: </Text>
                 <TouchableOpacity onPress={ () => this.props.navigation.navigate('Home')}>
                 <Text>HOME</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={()=>this.logout()}>
                     <Text>Logout</Text>
                 </TouchableOpacity>
-                
-                <Text>Chai BOT</Text>
             </View>
         )
     }
