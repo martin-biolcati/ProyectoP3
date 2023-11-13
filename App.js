@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import Register from './src/screens/Register/Register';
 import Login from './src/screens/Login/Login';
 import Home from './src/screens/Home/Home'
+import Profile from './src/screens/Profile/Profile';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -16,7 +17,7 @@ export default function App() {
       <Stack.Screen name='Registro' component={Register} options={ { headerShown: false } }/>
       <Stack.Screen name='Login' component={Login} options={ { headerShown: false } }/>
       <Stack.Screen name='Home' component={Home} options={ { headerShown: false } }/>
-      {/* Si implementamos tabnavigation para el resto de la app. El tercer componente debe ser una navegación que tenga a Home como primer screen */}
+      <Stack.Screen name='Profile' component={Profile} options={ { headerShown: false } }/>
     </Stack.Navigator>
   </NavigationContainer>
   );
