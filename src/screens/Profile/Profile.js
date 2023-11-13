@@ -25,9 +25,7 @@ class Profile extends Component {
                 <Text>Email:{auth.currentUser.email}</Text>
                 <Text>Mini Bio:</Text>
                 <Text>Foto de perfil: </Text>
-                <TouchableOpacity onPress={ () => this.props.navigation.navigate('Home')}>
-                <Text>HOME</Text>
-                </TouchableOpacity>
+                <Text>Cantidad de Posteos:</Text>
                 <TouchableOpacity onPress={()=>this.logout()}>
                     <Text>Logout</Text>
                 </TouchableOpacity>
@@ -38,7 +36,7 @@ class Profile extends Component {
 
 const styles = StyleSheet.create({
     formContainer:{
-        paddingHorizontal:600,
+        paddingHorizontal:10,
         marginTop: 20,
     },
     input:{

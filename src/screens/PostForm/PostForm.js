@@ -13,9 +13,11 @@ class PostForm extends Component {
 
     crearPost(owner, textoPost, createdAt){
         db.collection('posts').add({
-            owner: owner, //auth.currentUser.email,
-            textoPost: textoPost, //this.state.textoPost,
-            createdAt: createdAt //Date.now(), 
+            owner: auth.currentUser.email,
+            textoPost: this.state.textoPost,
+            createdAt: Date.now(), 
+            photo: this.state.url,
+            likes: [],
         })
         .then( res => console.log(res))
         .catch( e => console.log(e))
