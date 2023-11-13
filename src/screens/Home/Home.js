@@ -49,9 +49,9 @@ class Home extends Component {
                 <TouchableOpacity onPress={()=>this.logout()}>
                     <Text>Logout</Text>
                 </TouchableOpacity>
-               
+                <TouchableOpacity onPress={ () => this.props.navigation.navigate('PostForm')}>
                 <Text>Crear nuevo post</Text>
-
+                </TouchableOpacity>
                 <Text>Lista de posteos creados</Text>
                 
                 <FlatList
