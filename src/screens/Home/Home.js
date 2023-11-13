@@ -43,26 +43,12 @@ class Home extends Component {
         console.log(this.state);
         return(
             <View>
-                <TouchableOpacity onPress={ () => this.props.navigation.navigate('Home')}>
-                <Text>HOME</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={()=>this.logout()}>
-                    <Text>Logout</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={ () => this.props.navigation.navigate('PostForm')}>
-                <Text>Crear nuevo post</Text>
-                </TouchableOpacity>
                 <Text>Lista de posteos creados</Text>
-                
                 <FlatList
                     data={this.state.posts}
                     keyExtractor={ unPost => unPost.id }
                     renderItem={ ({item}) => <Post dataPost = {item} />  }
                 />
-                <TouchableOpacity onPress={ () => this.props.navigation.navigate('Profile')}>
-                   <Text>Perfil</Text>
-                </TouchableOpacity>
-
             </View>
         )
     }

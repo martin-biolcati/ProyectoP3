@@ -17,8 +17,9 @@ class PostForm extends Component {
         db.collection('posts').add({
             owner: auth.currentUser.email,
             textoPost: this.state.textoPost,
-            photo: this.state.url,
             createdAt: Date.now(), 
+            photo: this.state.url,
+            likes: [],
         })
         .then( res => console.log("Posteaste"))
         .catch( e => console.log(e))
