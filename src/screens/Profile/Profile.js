@@ -27,7 +27,7 @@ class Profile extends Component {
                     <Text>Logout</Text>
                 </TouchableOpacity>
                 
-                <Text>Chai BOT</Text>
+                <Text>{auth.currentUser.email}</Text>
             </View>
         )
     }
