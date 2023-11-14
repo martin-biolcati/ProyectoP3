@@ -61,12 +61,12 @@ class Post extends Component {
 
     render(){
         console.log('aaa1');
-        console.log(this.props.dataPost)
+        console.log(this.props.dataPost.datos.photo )
         return (
             <View>
                 <Text>{ this.props.dataPost.datos.owner }</Text>
                 <Text>{ this.props.dataPost.datos.textoPost }</Text>
-                <Image style={styles.camera} source={{uri:this.props.dataPost.datos.photo }}/>
+                <Image style={styles.image} source={{uri:this.props.dataPost.datos.photo }} resizeMode='contain'/>
                 <Text>Cantidad de Likes:{ this.state.cantidadDeLikes }</Text>
                 {
                     this.state.like ?
@@ -114,7 +114,11 @@ const styles = StyleSheet.create({
     },
     textButton:{
         color: '#fff'
-    }
+    },
+    image: {
+        height: 300,
+       }
+     
 })
 
 export default Post;
