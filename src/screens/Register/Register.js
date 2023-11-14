@@ -46,23 +46,46 @@ class Register extends Component {
                 <TextInput
                     style={styles.input}
                     onChangeText={(text)=>this.setState({email: text})}
-                    placeholder='email'
+                    placeholder='Email'
                     keyboardType='email-address'/>
                 <TextInput
                     style={styles.input}
                     onChangeText={(text)=>this.setState({userName: text})}
-                    placeholder='user name'
+                    placeholder='User name'
                     keyboardType='default'/>
                 <TextInput
                     style={styles.input}
                     onChangeText={(text)=>this.setState({password: text})}
-                    placeholder='password'
+                    placeholder='Password'
                     keyboardType='email-address'
                     secureTextEntry={true}
                 />
-                <TouchableOpacity style={styles.button} onPress={()=>this.register(this.state.email, this.state.password)}>
-                    <Text style={styles.textButton}>Registrarse</Text>    
-                </TouchableOpacity>
+                <TextInput
+                        style={styles.input}
+                        onChangeText={(text) => this.setState({ bio: text })}
+                        placeholder="Mini biografía"
+                        keyboardType="default"
+                        value={this.state.bio}
+                    />
+
+                    <TextInput
+                        style={styles.input}
+                        onChangeText={(text) => this.setState({ fotoPerfil: text })}
+                        placeholder="URL para foto de perfil"
+                        keyboardType="default"
+                        value={this.state.fotoPerfil}
+                    />
+                  
+                    {!this.state.userName || !this.state.email || !this.state.password ? (
+                        <TouchableOpacity style={styles.botonDeshabilitado} onPress={() => alert("Debe completar: Email, User name y Password")}>
+                            <Text style={styles.textButton}>Registrarse</Text>
+                        </TouchableOpacity>
+                    ) :(
+                    <TouchableOpacity style={styles.button} onPress={()=>this.register(this.state.email, this.state.password)}>
+                        <Text style={styles.textButton}>Registrarse</Text>    
+                    </TouchableOpacity> 
+                    )}
+
                 <TouchableOpacity onPress={ () => this.props.navigation.navigate('Login')}>
                    <Text>Ya tengo cuenta. Ir al login</Text>
                 </TouchableOpacity>
@@ -88,16 +111,19 @@ const styles = StyleSheet.create({
     },
     button:{
         backgroundColor:'#28a745',
-        paddingHorizontal: 10,
-        paddingVertical: 6,
-        textAlign: 'center',
-        borderRadius:4, 
-        borderWidth:1,
-        borderStyle: 'solid',
-        borderColor: '#28a745'
+        alignItems: 'center', 
+        padding: 15,
+        borderRadius: 5,
+    },
+    botonDeshabilitado: {
+        backgroundColor: '#7f848e',
+        padding: 15,
+        borderRadius: 5,
+        alignItems: 'center',
     },
     textButton:{
-        color: '#fff'
+        color: 'white',
+        fontSize: 16,
     }
 
 })

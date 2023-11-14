@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import { db, auth } from '../../firebase/config';
 import firebase from 'firebase';
 
@@ -15,10 +15,17 @@ class Post extends Component {
     }
 
     componentDidMount(){
-        if(this.props.dataPost.datos.likes.includes(auth.currentUser.email)){
+        let likes = this.props.dataPost.datos.likes
+
+        if(likes.length === 0){
             this.setState({
-                like:true
+                like: false
             })
+        }
+        if(likes.length > 0){
+            likes.forEach( like => {if (like === auth.currentUser.email) {
+                this.setState({ like: true })
+            }})
         }
         
     }
@@ -53,11 +60,13 @@ class Post extends Component {
 
 
     render(){
-        console.log(this.props)
+        console.log('aaa1');
+        console.log(this.props.dataPost.datos.photo )
         return (
             <View>
                 <Text>{ this.props.dataPost.datos.owner }</Text>
                 <Text>{ this.props.dataPost.datos.textoPost }</Text>
+                <Image style={styles.image} source={{uri:this.props.dataPost.datos.photo }} resizeMode='contain'/>
                 <Text>Cantidad de Likes:{ this.state.cantidadDeLikes }</Text>
                 {
                     this.state.like ?
@@ -105,7 +114,11 @@ const styles = StyleSheet.create({
     },
     textButton:{
         color: '#fff'
-    }
+    },
+    image: {
+        height: 300,
+       }
+     
 })
 
 export default Post;

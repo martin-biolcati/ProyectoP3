@@ -13,7 +13,7 @@ class PostForm extends Component {
         }
     }
 
-    crearPost(owner, textoPost, createdAt){
+    crearPost(){
         db.collection('posts').add({
             owner: auth.currentUser.email,
             textoPost: this.state.textoPost,
@@ -39,13 +39,15 @@ class PostForm extends Component {
                 <>
                 
                 <TextInput
-                    style={styles.input}
-                    onChangeText={(text)=>this.setState({textoPost: text})}
-                    placeholder='Escribir...'
-                    keyboardType='default'
-                    value={this.state.textoPost}
-                    />
-                <TouchableOpacity style={styles.button} onPress={()=>this.crearPost(auth.currentUser.email, this.state.textoPost, Date.now())}>
+                style={styles.input}
+                onChangeText={(text)=>this.setState({textoPost: text})}
+                placeholder='Escribir...'
+                keyboardType='default'
+                value={this.state.textoPost}
+                />
+               
+                <></>                
+                <TouchableOpacity style={styles.button} onPress={()=>this.crearPost()}>
                     <Text style={styles.textButton}>Postear</Text>    
                 </TouchableOpacity>
                 </>}
