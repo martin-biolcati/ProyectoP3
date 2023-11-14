@@ -10,7 +10,8 @@ class Register extends Component {
             email:'',
             userName:'',
             password:'',
-            registered:'',
+            bio:'',
+            fotoPerfil:'',
             loggedIn: false
         }
     }
@@ -30,11 +31,44 @@ class Register extends Component {
     register (email, pass){
         auth.createUserWithEmailAndPassword(email, pass)
             .then(()=>{
-                this.setState({registered: true});
+                this.setState({loggedIn: true});
                 console.log('Registrado ok');
             })
+            .then(res => {
+                let dataUsuario = {
+                    owner: this.state.email,
+                    userName: this.state.userName,
+                    email: this.state.email,
+                    createdAt: Date.now(),
+                    bio: this.state.bio,
+                    fotoPerfil: this.state.fotoPerfil
+                };
+                db.collection('users').add(dataUsuario)
+                    .then(() => {
+                        this.setState({
+                            email: "",
+                            userName: "",
+                            password: "",
+                            bio: "",
+                            fotoPerfil: "",
+                            error: null
+                        })
+                        auth.signOut();
+                    })
+                    .then(() => {
+                        this.props.navigation.navigate('Menu');
+                    })
+            })
             .catch( error => {
-                this.setState({error: 'Fallo en el registro.'})
+                let mensajeError =  'Fallo en el registro.'
+                if (error.code === "auth/email-already-in-use") {
+                    mensajeError = "El correo electrónico ya está en uso";
+                } else if (error.code === "auth/invalid-email") {
+                    mensajeError = "El correo electrónico no es válido";
+                } else if (error.code === "auth/weak-password") {
+                    mensajeError = "La contraseña es demasiado débil";
+                } 
+                this.setState({ error: mensajeError });
                 console.log(error);
             })
     }
@@ -75,13 +109,17 @@ class Register extends Component {
                         keyboardType="default"
                         value={this.state.fotoPerfil}
                     />
-                  
+                    
+                    {this.state.error ? (
+                        <Text style={styles.error}>{this.state.error}</Text>
+                    ) : null}
+
                     {!this.state.userName || !this.state.email || !this.state.password ? (
                         <TouchableOpacity style={styles.botonDeshabilitado} onPress={() => alert("Debe completar: Email, User name y Password")}>
                             <Text style={styles.textButton}>Registrarse</Text>
                         </TouchableOpacity>
                     ) :(
-                    <TouchableOpacity style={styles.button} onPress={()=>this.register(this.state.email, this.state.password)}>
+                    <TouchableOpacity style={styles.button} onPress={()=>this.register(this.state.email, this.state.password, this.state.userName, this.state.bio, this.state.fotoPerfil)}>
                         <Text style={styles.textButton}>Registrarse</Text>    
                     </TouchableOpacity> 
                     )}
@@ -124,6 +162,11 @@ const styles = StyleSheet.create({
     textButton:{
         color: 'white',
         fontSize: 16,
+    },
+    error:{
+        color: 'red',
+        fontSize: 16,
+        textAlign: 'center'
     }
 
 })
