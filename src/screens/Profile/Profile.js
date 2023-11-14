@@ -6,12 +6,25 @@ class Profile extends Component {
     constructor(){
         super()
         this.state={
-            mail: ''
+           
         }
     }
 
     componentDidMount(){
-         }
+        // db.collection('posts').where('owner', '==', auth.currentUser.email).onSnapshot(
+        //     posteos => {
+        //         let postsARenderizar = [];
+
+        //         posteos.forEach( onePost => {
+        //                         postsARenderizar.push(
+        //                             {id : onePost.id,
+        //                             datos : onePost.data()})})
+
+        //     this.setState({
+        //         listaPost : postsARenderizar
+        //     })
+        // })
+    }
          
     logout(){
             auth.signOut();
@@ -21,9 +34,9 @@ class Profile extends Component {
     render(){
         return(
             <View style={styles.formContainer}>
-                <Text>Nombre del usuario:</Text>
-                <Text>Email:{auth.currentUser.email}</Text>
-                <Text>Mini Bio:</Text>
+                <Text>Nombre del usuario: {auth.currentUser.userName}</Text>
+                <Text>Email: {auth.currentUser.email}</Text>
+                <Text>Mini Bio: {auth.currentUser.bio}</Text>
                 <Text>Foto de perfil: </Text>
                 <Text>Cantidad de Posteos:</Text>
                 <TouchableOpacity onPress={()=>this.logout()}>

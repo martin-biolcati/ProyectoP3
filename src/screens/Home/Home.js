@@ -42,7 +42,7 @@ class Home extends Component {
     render(){
         console.log(this.state);
         return(
-            <View>
+            <View style={styles.contenedor}>
                 <Text>Lista de posteos creados</Text>
                 <FlatList
                     data={this.state.posts}
@@ -54,6 +54,11 @@ class Home extends Component {
     }
 }
 
-
+const styles = StyleSheet.create({
+    contenedor:{
+      backgroundColor:'blue',
+    }
+  })
+  
 
 export default Home;

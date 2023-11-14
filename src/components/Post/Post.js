@@ -60,8 +60,6 @@ class Post extends Component {
 
 
     render(){
-        console.log('aaa1');
-        console.log(this.props.dataPost.datos.photo )
         return (
             <View>
                 <Text>{ this.props.dataPost.datos.owner }</Text>
