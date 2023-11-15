@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Image, TextInput} from 'react-native';
 import { db, auth } from '../../firebase/config';
 import firebase from 'firebase';
 
@@ -10,7 +10,11 @@ class Post extends Component {
 
         this.state = {
             like: false,
-            cantidadDeLikes: this.props.dataPost.datos.likes.length
+            cantidadDeLikes: this.props.dataPost.datos.likes.length,
+            comentarioTexto: "",
+            comentarios: [],
+            mostrarComentarios: false,
+            // cantComentarios: this.props.dataPost.datos.comentarios.length
         }
     }
 
@@ -57,15 +61,34 @@ class Post extends Component {
         )
         .catch( e => console.log(e))
     }
-
+    comentar(comentario) {
+        let elUsuario = this.props.dataPost.datos.owner;
+        
+        let nuevoComentario = {
+          usuario: elUsuario,
+          comentario: comentario,
+        };
+ 
+        let post = db.collection("posts").doc(this.props.dataPost.id);
+  
+        post.update({
+          comentarios: firebase.firestore.FieldValue.arrayUnion(nuevoComentario),
+        });
+      }
 
     render(){
+        console.log(this.props.dataPost)
         return (
             <View>
                 <Text>{ this.props.dataPost.datos.owner }</Text>
                 <Text>{ this.props.dataPost.datos.textoPost }</Text>
                 <Image style={styles.image} source={{uri:this.props.dataPost.datos.photo }} resizeMode='contain'/>
                 <Text>Cantidad de Likes:{ this.state.cantidadDeLikes }</Text>
+
+                <View styles={styles.comentario}>
+                    <Text><Text style={styles.username}>{this.props.dataPost.datos.owner}</Text>:{this.props.dataPost.datos.textoPost}</Text>
+                </View>
+
                 {
                     this.state.like ?
                         <TouchableOpacity style={styles.button} onPress={()=>this.unlike()}>
@@ -78,6 +101,38 @@ class Post extends Component {
                             <Text style={styles.textButton}>Likear</Text>    
                         </TouchableOpacity>
                 }
+
+                <TextInput
+                    style={styles.input}
+                    onChangeText={(texto) => this.setState({ comentarioTexto: texto })}
+                    placeholder="Agregar comentario"
+                    keyboardType="default"
+                    value={this.state.comentarioTexto}
+                />
+                <TouchableOpacity style={styles.button} onPress={() => this.comentar(this.state.comentarioTexto)}>
+                    <Text> Agregar comentario</Text>
+                </TouchableOpacity>
+                 {/* <Text>Cantidad de comentarios: {this.state.cantComentarios}</Text>  */}
+                <Text>Cantidad de likes: {this.props.dataPost.datos.likes.length}</Text>
+                <TouchableOpacity onPress={() => this.setState({ mostrarComentarios: !this.state.mostrarComentarios })}>
+                    <Text>
+                    {this.state.mostrarComentarios ? 'Ocultar Comentarios' : 'Mostrar Comentarios'}
+                </Text>
+                </TouchableOpacity>
+                {this.state.mostrarComentarios === true ?
+                    <FlatList
+                    data={this.props.dataPost.datos.comentarios}
+                    keyExtractor={(user) => user.id}
+                    renderItem={({item}) => (
+                    <TouchableOpacity>
+                    <View styles={styles.comentario}>
+                    <Text><Text style={styles.username}>{item.usuario}</Text>: {item.comentario}</Text>
+                    </View>
+                    </TouchableOpacity> )}
+                />
+                :
+                <Text></Text>
+                }
             </View>
 
         )
@@ -89,6 +144,11 @@ const styles = StyleSheet.create({
     formContainer:{
         paddingHorizontal:10,
         marginTop: 20,
+    }, 
+    username: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      marginRight: 10,
     },
     input:{
         height:20,
