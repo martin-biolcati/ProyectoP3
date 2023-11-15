@@ -47,8 +47,14 @@ class PostForm extends Component {
                 />
                
                 <></>                
-                <TouchableOpacity style={styles.button} onPress={()=>this.crearPost()}>
-                    <Text style={styles.textButton}>Postear</Text>    
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => {
+                        this.crearPost();
+                        this.props.navigation.navigate('Home');
+                    }}
+                    >
+                    <Text style={styles.textButton}>Postear</Text>
                 </TouchableOpacity>
                 </>}
             </View>
