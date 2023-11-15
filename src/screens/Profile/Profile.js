@@ -1,29 +1,38 @@
 import react, { Component } from 'react';
 import { db, auth } from '../../firebase/config';
-import {TextInput, TouchableOpacity, View, Text, StyleSheet} from 'react-native';
+import {TextInput, TouchableOpacity, View, Text, StyleSheet, FlatList} from 'react-native';
 
 class Profile extends Component {
     constructor(){
         super()
         this.state={
-           
+           userName: '',
+           bio: '',
+           foto: '',
+           listPost:[]
         }
     }
 
     componentDidMount(){
-        // db.collection('posts').where('owner', '==', auth.currentUser.email).onSnapshot(
-        //     posteos => {
-        //         let postsARenderizar = [];
+         db.collection('posts').where('owner', '==', auth.currentUser.email).onSnapshot(
+             posteos => {
+                 let postsARenderizar = [];
 
-        //         posteos.forEach( onePost => {
-        //                         postsARenderizar.push(
-        //                             {id : onePost.id,
-        //                             datos : onePost.data()})})
+                 posteos.forEach( onePost => {
+                                 postsARenderizar.push(
+                                     {id : onePost.id,
+                                     datos : onePost.data()})})
 
-        //     this.setState({
-        //         listaPost : postsARenderizar
-        //     })
-        // })
+             this.setState({
+                 listaPost : postsARenderizar
+             })
+         })
+        db.collection('users').where('owner', '==', auth.currentUser.email).onSnapshot(
+            usuario =>{
+                console.log('aca');
+               console.log(usuario);
+            this.setState({userName:usuario.userName, bio:usuario.bio, foto:usuario.fotPerfil})}
+        )
     }
          
     logout(){
@@ -34,7 +43,7 @@ class Profile extends Component {
     render(){
         return(
             <View style={styles.formContainer}>
-                <Text>Nombre del usuario: {auth.currentUser.userName}</Text>
+                <Text>Nombre del usuario: {this.state.userName}</Text>
                 <Text>Email: {auth.currentUser.email}</Text>
                 <Text>Mini Bio: {auth.currentUser.bio}</Text>
                 <Text>Foto de perfil: </Text>
@@ -42,6 +51,11 @@ class Profile extends Component {
                 <TouchableOpacity onPress={()=>this.logout()}>
                     <Text>Logout</Text>
                 </TouchableOpacity>
+                <FlatList
+                    data={this.state.listPost}
+                    keyExtractor={ unPost => unPost.id }
+                    renderItem={ ({item}) => <Post dataPost = {item} navigation={this.props.navigation}/>  }
+                />
             </View>
         )
     }
