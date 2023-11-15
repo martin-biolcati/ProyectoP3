@@ -52,6 +52,7 @@ class PostForm extends Component {
                     onPress={() => {
                         this.crearPost();
                         this.props.navigation.navigate('Home');
+                        this.setState({ showCamera: true });
                     }}
                     >
                     <Text style={styles.textButton}>Postear</Text>
