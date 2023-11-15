@@ -1,16 +1,27 @@
 import react, { Component } from 'react';
 import { auth } from '../../firebase/config';
-import {TextInput, TouchableOpacity, View, Text, StyleSheet} from 'react-native';
+import {TextInput, TouchableOpacity, View, Text, StyleSheet, ActivityIndicatior} from 'react-native';
 
 class Login extends Component {
     constructor(){
         super()
         this.state={
             email:'',
-            password:''
+            password:'',
+            logueado: false
         }
     }
-
+    componentDidMount() {
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                this.props.navigation.navigate('Menu')
+            }
+            else{
+                <ActivityIndicatior size="large" color="purple"/>
+            }
+        
+        })
+    }
     login (email, pass){
         auth.signInWithEmailAndPassword(email, pass)
             .then( response => {

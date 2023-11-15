@@ -18,13 +18,15 @@ class Register extends Component {
 
     componentDidMount(){
         console.log("Chequear si el usuario está loguado en firebase.");
-        auth.onAuthStateChanged( user => {
-            console.log(user)
-            if( user ){
-                this.props.navigation.navigate('Home')
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                this.props.navigation.navigate('Menu')
             }
-
-        } )
+            else{
+                <ActivityIndicatior size="large" color="purple"/>
+            }
+        
+        })
 
     }
 
