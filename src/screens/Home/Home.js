@@ -4,6 +4,7 @@ import { db, auth } from '../../firebase/config';
 import PostForm from '../PostForm/PostForm';
 import Post from '../../components/Post/Post';
 import Profile from '../Profile/Profile';
+import Buscador from '../../components/Buscador/Buscador'
 
 class Home extends Component {
     constructor(){

@@ -6,6 +6,7 @@ import { TextInput, TouchableOpacity, View, Text, StyleSheet, FlatList } from "r
 import Home from "../../screens/Home/Home";
 import PostForm from "../../screens/PostForm/PostForm";
 import Profile from "../../screens/Profile/Profile";
+import Buscador from "../Buscador/Buscador"
 
 const Tab = createBottomTabNavigator();
 
@@ -24,7 +25,8 @@ class Navbar extends Component {
               <Tab.Screen name="Home" component={Home}/>
               <Tab.Screen name="PostForm" component={PostForm}/>
               <Tab.Screen name="Profile" component={Profile}/>
-          </Tab.Navigator>
+              <Tab.Screen name="Search" component={Buscador}/>
+              </Tab.Navigator>
       );
     }
   }
