@@ -48,7 +48,7 @@ class Home extends Component {
                 <FlatList
                     data={this.state.posts}
                     keyExtractor={ unPost => unPost.id }
-                    renderItem={ ({item}) => <Post dataPost = {item} />  }
+                    renderItem={ ({item}) => <Post dataPost = {item} navigation={this.props.navigation}/>  }
                 />
             </View>
         )
@@ -57,6 +57,7 @@ class Home extends Component {
 
 const styles = StyleSheet.create({
     contenedor:{
+        flex:1,
       backgroundColor:'blue',
     }
   })

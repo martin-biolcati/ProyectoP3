@@ -37,7 +37,7 @@ class Buscador extends Component {
                 return fil
             }
             })
-        this.setState({filtrado: filtradoUsers}, () => console.log(this.state.filtrado))    
+        this.setState({filtradoUsers: filtrado}, () => console.log(this.state.filtrado))    
     }
     usuarioSeleccionado(id){
         this.props.navigation.navigate("Profile", id)
@@ -58,9 +58,9 @@ class Buscador extends Component {
                 </TouchableOpacity>
                 <Text>Resultados de busqueda para: {this.state.caampoBusqueda}</Text>
                 {
-                    this.state.filtrado.length > 0 ?
+                    this.state.filtradoUsers.length > 0 ?
                         <FlatList
-                        data={this.state.filtrado}
+                        data={this.state.filtradoUsers}
                         keyExtractor={user => user.id}
                         renderItem= {({item}) =>
                             <TouchableOpacity style={styles.button} onPress={() => this.usuarioSeleccionado()}>
