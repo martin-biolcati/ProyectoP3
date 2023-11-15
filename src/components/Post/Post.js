@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
         color: '#fff'
     },
     image: {
-        height: 300,
+        height: 400,
        }
      
 })
