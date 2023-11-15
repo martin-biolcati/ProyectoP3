@@ -1,6 +1,6 @@
 import react, { Component } from 'react';
 import {db, auth } from '../../firebase/config';
-import {TextInput, TouchableOpacity, View, Text, StyleSheet} from 'react-native';
+import {TextInput, TouchableOpacity, View, Text, StyleSheet,FlatList} from 'react-native';
 
 
 class Buscador extends Component {
@@ -27,6 +27,8 @@ class Buscador extends Component {
                     })
                     this.setState({backup: usuarios})
                 })
+                console.log('aca')
+                console.log(usuarios)
             }
         )
     }
@@ -36,12 +38,16 @@ class Buscador extends Component {
             if(fil.data.owner.toLowerCase().includes(this.state.caampoBusqueda.toLowerCase())) {
                 return fil
             }
+        console.log('filtrado')
+        console.log(filtrado) 
             })
-        this.setState({filtradoUsers: filtrado}, () => console.log(this.state.filtrado))    
+        this.setState({filtradoUsers: filtrado}, () => console.log(this.state.filtradoUsers))    
     }
     usuarioSeleccionado(id){
-        this.props.navigation.navigate("Profile", id)
+        this.props.navigation.navigate("ProfileUsers", id)
+        console.log(id)
     }
+    
 
    render(){
         return(
@@ -65,8 +71,7 @@ class Buscador extends Component {
                         renderItem= {({item}) =>
                             <TouchableOpacity style={styles.button} onPress={() => this.usuarioSeleccionado()}>
                                 <Text>{item.data.userName}</Text>
-                                {console.log(item.data.userName)}
-                            </TouchableOpacity>
+                                </TouchableOpacity>
                         } 
                         />
                             
