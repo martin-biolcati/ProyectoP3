@@ -1,6 +1,6 @@
 import react, { Component } from 'react';
 import {db, auth } from '../../firebase/config';
-import {TextInput, TouchableOpacity, View, Text, StyleSheet,FlatList} from 'react-native';
+import {TextInput, TouchableOpacity, View, Text, StyleSheet,FlatList, ActivityIndicator} from 'react-native';
 
 
 class Buscador extends Component {
@@ -51,14 +51,20 @@ class Buscador extends Component {
 
    render(){
         return(
-            <View>
+            <View style={styles.formContainer}>
+                {this.state.backup === 0 ? 
+                
+                <View>
+                   <ActivityIndicator size='large' color='white' />
+               </View>
+               :
                 <TextInput
                 style= {styles.input}
                 onChangeText={(text)=> this.setState({caampoBusqueda: text})}
                 placeholder='Buscar Perfiles'
                 keyboardType='default'
                 value={this.state.caampoBusqueda}
-                />
+                />}
                 <TouchableOpacity style={styles.button} onPress={()=> this.busqueda()}>
                     <Text>Buscar</Text>
                 </TouchableOpacity>
@@ -80,7 +86,7 @@ class Buscador extends Component {
                     
                     <Text>Cargando...</Text>
                 }
-
+                
 
                 
             </View>
@@ -107,14 +113,14 @@ const styles = StyleSheet.create({
         marginVertical:10,
     },
     button:{
-        backgroundColor:'blue',
+        backgroundColor:'orange',
         paddingHorizontal: 10,
         paddingVertical: 6,
         textAlign: 'center',
         borderRadius:4, 
         borderWidth:1,
         borderStyle: 'solid',
-        borderColor: '#28a745'
+        borderColor: 'orange'
     },
     textButton:{
         color: '#fff'

@@ -6,9 +6,7 @@ class Profile extends Component {
     constructor(){
         super()
         this.state={
-           userName: '',
-           bio: '',
-           foto: '',
+           userEnUso:[],
            listPost:[]
         }
     }
@@ -27,13 +25,19 @@ class Profile extends Component {
                  listaPost : postsARenderizar
              })
          })
-        db.collection('users').where('owner', '==', auth.currentUser.email).onSnapshot(
-            usuario =>{
-                console.log('aca');
-               console.log(usuario);
-            this.setState({userName:usuario.userName, bio:usuario.bio, foto:usuario.fotPerfil})}
-        )
-    }
+         db.collection('users').where('owner', '==', auth.currentUser.email).onSnapshot(
+            usuario => {
+                let usuarioIndicado = [];
+
+                usuario.forEach( actual => {
+                                usuarioIndicado.push(
+                                    {id : actual.id,
+                                    user : actual.data()})})
+
+            this.setState({
+                userEnUso : usuarioIndicado
+            })
+        })}
          
     logout(){
             auth.signOut();
@@ -43,7 +47,7 @@ class Profile extends Component {
     render(){
         return(
             <View style={styles.formContainer}>
-                <Text>Nombre del usuario: {this.state.userName}</Text>
+                <Text>Nombre del usuario: {this.state.userEnUso[0].user.userName}</Text>
                 <Text>Email: {auth.currentUser.email}</Text>
                 <Text>Mini Bio: {auth.currentUser.bio}</Text>
                 <Text>Foto de perfil: </Text>
