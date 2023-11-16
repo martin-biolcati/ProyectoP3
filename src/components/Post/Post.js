@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, Image, TextInput} from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Image, TextInput,FlatList} from 'react-native';
 import { db, auth } from '../../firebase/config';
 import firebase from 'firebase';
 
@@ -86,7 +86,7 @@ class Post extends Component {
                 <Text style={styles.texto}>Cantidad de Likes:{ this.state.cantidadDeLikes }</Text>
 
                 <View styles={styles.comentario}>
-                    <Text style={styles.texto}><Text style={styles.username}>{this.props.dataPost.datos.owner}</Text>:{this.props.dataPost.datos.textoPost}</Text>
+                    <Text style={styles.texto}><Text style={styles.username}>{this.props.dataPost.datos.owner}</Text></Text>
                 </View>
 
                 {
@@ -102,37 +102,43 @@ class Post extends Component {
                         </TouchableOpacity>
                 }
 
-                <TextInput
-                    style={styles.input}
-                    onChangeText={(texto) => this.setState({ comentarioTexto: texto })}
-                    placeholder="Agregar comentario"
-                    keyboardType="default"
-                    value={this.state.comentarioTexto}
-                />
-                <TouchableOpacity style={styles.button} onPress={() => this.comentar(this.state.comentarioTexto)}>
-                    <Text style={styles.texto}> Agregar comentario</Text>
-                </TouchableOpacity>
-                 {/* <Text>Cantidad de comentarios: {this.state.cantComentarios}</Text>  */}
-                <Text>Cantidad de likes: {this.props.dataPost.datos.likes.length}</Text>
-                <TouchableOpacity onPress={() => this.setState({ mostrarComentarios: !this.state.mostrarComentarios })}>
-                    <Text style={styles.texto}>
-                    {this.state.mostrarComentarios ? 'Ocultar Comentarios' : 'Mostrar Comentarios'}
-                </Text>
-                </TouchableOpacity>
-                {this.state.mostrarComentarios === true ?
-                    <FlatList
-                    data={this.props.dataPost.datos.comentarios}
-                    keyExtractor={(user) => user.id}
-                    renderItem={({item}) => (
-                    <TouchableOpacity>
-                    <View styles={styles.comentario}>
-                    <Text><Text style={styles.username}>{item.usuario}</Text>: {item.comentario}</Text>
-                    </View>
-                    </TouchableOpacity> )}
-                />
-                :
-                <Text></Text>
-                }
+<TextInput
+          style={styles.input}
+          onChangeText={(texto) => this.setState({ comentarioTexto: texto })}
+          placeholder="Agregar comentario"
+          keyboardType="default"
+          value={this.state.comentarioTexto}
+        />
+        <TouchableOpacity style={styles.button} onPress={() => this.comentar(this.state.comentarioTexto)}>
+          <Text> Agregar comentario</Text>
+        </TouchableOpacity>
+        {
+          this.props.dataPost.datos.comentarios ?
+            <Text>Cantidad de comentarios: {this.props.dataPost.datos.comentarios.length}</Text> :
+            <Text> No hay comentarios en este posteo</Text>
+        }
+
+
+        <TouchableOpacity onPress={() => this.setState({ mostrarComentarios: !this.state.mostrarComentarios })}>
+          <Text>
+            {this.state.mostrarComentarios ? 'Ocultar Comentarios' : 'Mostrar Comentarios'}
+          </Text>
+        </TouchableOpacity>
+        {this.state.mostrarComentarios === true ?
+          <FlatList
+            data={this.props.dataPost.datos.comentarios}
+            keyExtractor={(ok) => ok.id}
+            renderItem={({ item }) => (
+              <TouchableOpacity>
+                <View styles={styles.comentario}>
+                  <Text><Text style={styles.username}>{item.usuario}</Text>: {item.comentario}</Text>
+                </View>
+              </TouchableOpacity>
+            )}
+          />
+          :
+          <Text></Text>
+}
             </View>
 
         )
@@ -144,6 +150,15 @@ const styles = StyleSheet.create({
     formContainer:{
         paddingHorizontal:10,
         marginTop: 20,
+        borderRadius: 8,
+        margin: 10,
+        padding: 10,
+        shadowColor: 'black',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        shadowRadius: 3,
+        elevation: 5,
+          
     }, 
     username: {
       fontSize: 16,
@@ -179,7 +194,15 @@ const styles = StyleSheet.create({
        },
        texto:{
         color: 'white',
-    }
+    },
+    textButton: {
+        color: 'white'
+      },
+      comentario: {
+        flexDirection: 'row',
+        alignItems: 'center',
+      }
+    
 
      
 })
