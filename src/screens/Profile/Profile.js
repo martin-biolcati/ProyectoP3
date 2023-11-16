@@ -63,8 +63,10 @@ class Profile extends Component {
 
 const styles = StyleSheet.create({
     formContainer:{
+        flex:1,
         paddingHorizontal:10,
         marginTop: 20,
+        backgroundColor:'grey',
     },
     input:{
         height:20,

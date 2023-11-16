@@ -26,11 +26,11 @@ class Navbar extends Component {
     render() {
   
       return (
-          <Tab.Navigator>
-              <Tab.Screen name="MAGOBA" component={Home} options={{tabBarIcon: () => <Entypo name='home' size={24} color='black'/>}}/>
-              <Tab.Screen name="PostForm" component={PostForm} options={{tabBarIcon: () => <Octicons name='diff-added' size={24} color='black'/>}}/>
-              <Tab.Screen name="Search" component={Buscador} options={{tabBarIcon: () => <FontAwesome name='search' size={24} color='black'/>}}/>
-              <Tab.Screen name="Profile" component={Profile} options={{tabBarIcon: () => <Ionicons name='person' size={24} color='black'/>}}/>
+          <Tab.Navigator screenOptions={{tabBarShowLabel: false}}>
+              <Tab.Screen name="MAGOBA" component={Home} options={{headerShown: false,tabBarIcon: () => <Entypo name='home' size={24} color='black'/>}}/>
+              <Tab.Screen name="PostForm" component={PostForm} options={{headerShown: false, tabBarIcon: () => <Octicons name='diff-added' size={24} color='black'/>}}/>
+              <Tab.Screen name="Search" component={Buscador} options={{headerShown: false, tabBarIcon: () => <FontAwesome name='search' size={24} color='black'/>}}/>
+              <Tab.Screen name="Profile" component={Profile} options={{headerShown: false, tabBarIcon: () => <Ionicons name='person' size={24} color='black'/>}}/>
               </Tab.Navigator>
       );
     }

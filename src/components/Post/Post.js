@@ -80,13 +80,13 @@ class Post extends Component {
         console.log(this.props.dataPost)
         return (
             <View>
-                <Text>{ this.props.dataPost.datos.owner }</Text>
-                <Text>{ this.props.dataPost.datos.textoPost }</Text>
+                <Text style={styles.texto}>{ this.props.dataPost.datos.owner }</Text>
+                <Text style={styles.texto}>{ this.props.dataPost.datos.textoPost }</Text>
                 <Image style={styles.image} source={{uri:this.props.dataPost.datos.photo }} resizeMode='contain'/>
-                <Text>Cantidad de Likes:{ this.state.cantidadDeLikes }</Text>
+                <Text style={styles.texto}>Cantidad de Likes:{ this.state.cantidadDeLikes }</Text>
 
                 <View styles={styles.comentario}>
-                    <Text><Text style={styles.username}>{this.props.dataPost.datos.owner}</Text>:{this.props.dataPost.datos.textoPost}</Text>
+                    <Text style={styles.texto}><Text style={styles.username}>{this.props.dataPost.datos.owner}</Text>:{this.props.dataPost.datos.textoPost}</Text>
                 </View>
 
                 {
@@ -110,12 +110,12 @@ class Post extends Component {
                     value={this.state.comentarioTexto}
                 />
                 <TouchableOpacity style={styles.button} onPress={() => this.comentar(this.state.comentarioTexto)}>
-                    <Text> Agregar comentario</Text>
+                    <Text style={styles.texto}> Agregar comentario</Text>
                 </TouchableOpacity>
                  {/* <Text>Cantidad de comentarios: {this.state.cantComentarios}</Text>  */}
                 <Text>Cantidad de likes: {this.props.dataPost.datos.likes.length}</Text>
                 <TouchableOpacity onPress={() => this.setState({ mostrarComentarios: !this.state.mostrarComentarios })}>
-                    <Text>
+                    <Text style={styles.texto}>
                     {this.state.mostrarComentarios ? 'Ocultar Comentarios' : 'Mostrar Comentarios'}
                 </Text>
                 </TouchableOpacity>
@@ -149,6 +149,7 @@ const styles = StyleSheet.create({
       fontSize: 16,
       fontWeight: 'bold',
       marginRight: 10,
+      color: 'white'
     },
     input:{
         height:20,
@@ -168,14 +169,18 @@ const styles = StyleSheet.create({
         borderRadius:4, 
         borderWidth:1,
         borderStyle: 'solid',
-        borderColor: 'orange'
+        borderColor: 'orange',
     },
     textButton:{
         color: '#fff'
     },
     image: {
         height: 400,
-       }
+       },
+       texto:{
+        color: 'white',
+    }
+
      
 })
 
