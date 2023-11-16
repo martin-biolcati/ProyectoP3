@@ -1,6 +1,7 @@
 import react, { Component } from 'react';
 import { db, auth } from '../../firebase/config';
-import {TextInput, TouchableOpacity, View, Text, StyleSheet, FlatList} from 'react-native';
+import {TextInput, TouchableOpacity, View, Text, StyleSheet, FlatList, ActivityIndicator, Image} from 'react-native';
+import Post from '../../components/Post/Post';
 
 class Profile extends Component {
     constructor(){
@@ -24,8 +25,8 @@ class Profile extends Component {
             this.setState({
                 userEnUso : usuarioIndicado
             })
+
             })
-       
 
         db.collection('posts').where('owner', '==', auth.currentUser.email).orderBy('createdAt', 'desc').onSnapshot(
             posteos => {
@@ -39,67 +40,88 @@ class Profile extends Component {
             this.setState({
                 listaPost : postsARenderizar
             })
-        })  
-    }
            
-    logout(){
-            auth.signOut();
-            this.props.navigation.navigate('Login')
-        }
-
-    render(){
-        return(
-            <View style={styles.formContainer}>
-                {/* <Text>Nombre del usuario: {this.state.userEnUso[0].user.userName}</Text> */}
-                <Text>Email: {auth.currentUser.email}</Text>
-                {/* <Text>Mini Bio: {this.state.userEnUso[0].user.bio}</Text> */}
-                <Text>Foto de perfil: </Text>
-                <Text>Cantidad de Posteos:</Text>
-                <TouchableOpacity onPress={()=>this.logout()}>
-                    <Text>Logout</Text>
-                </TouchableOpacity>
-                <FlatList
-                    data={this.state.listPost}
-                    keyExtractor={ unPost => unPost.id }
-                    renderItem={ ({item}) => <Post dataPost = {item} navigation={this.props.navigation}/>  }
-                />
-            </View>
+           
+            }
         )
     }
+
+    logout() {
+        auth.signOut();
+        this.props.navigation.navigate ("Login")
+    }
+
+    render() {
+        return (
+          <View style={styles.container}>
+            {this.state.userEnUso.length > 0 ? (
+              <>
+                <View style={styles.flexUno}>
+                  <Text style={styles.textoBlanco}>
+                      Nombre de usuario: {this.state.userEnUso[0].user.userName}  
+                  </Text>
+                  <Text style={styles.textoBlanco}>
+                    Email: {auth.currentUser.email}
+                  </Text>
+                   <Text style={styles.textoBlanco}>Mini bio: {this.state.userEnUso[0].user.bio}</Text> 
+                     {/* <Image style={styles.fotoPerfil}  source={{uri:''}} resizeMode='contain'/>   */}
+                  <TouchableOpacity onPress={() => this.logout()}>
+                  <Text style={styles.textoBlanco}>Logout</Text>
+                </TouchableOpacity>
+                </View>
+      
+                <View style={styles.flexDos}> 
+                 <FlatList
+                    data={this.state.listaPost}
+                    keyExtractor={(onePost) => onePost.id}
+                    renderItem={({ item }) => <Post dataPost={item} navigation={this.props.navigation} />}
+                  />
+                </View>
+      
+
+                </>
+            ) : (
+              <View>
+                <ActivityIndicator size='large' color="white" style={styles.loader}  />
+              </View>
+            )}
+          </View>
+        );
+      }
+      
 }
 
 const styles = StyleSheet.create({
-    formContainer:{
-        flex:1,
-        paddingHorizontal:10,
-        marginTop: 20,
-        backgroundColor:'grey',
+    container: {
+      flex: 1,
+      padding : 30,
+      backgroundColor: 'grey',
+      color : 'white'
     },
-    input:{
-        height:20,
-        paddingVertical:15,
-        paddingHorizontal: 10,
-        borderWidth:1,
-        borderColor: '#ccc',
-        borderStyle: 'solid',
-        borderRadius: 6,
-        marginVertical:10,
-    },
-    button:{
-        backgroundColor:'#28a745',
-        paddingHorizontal: 10,
-        paddingVertical: 6,
-        textAlign: 'center',
-        borderRadius:4, 
-        borderWidth:1,
-        borderStyle: 'solid',
-        borderColor: '#28a745'
-    },
-    textButton:{
-        color: '#fff'
-    }
-
-})
+    textoBlanco: {
+        color: 'white',
+        },
+      flexUno: {
+        flex : 1,
+        },
+        flexDos: {
+          flex : 2
+          },
+          fotoPerfil : {
+            height: 40,
+            width: 40,
+            borderWidth: 1,
+            borderRadius: 25,
+            borderColor: 'rgb(240, 228, 228)',
+            marginRight: 10
+           },
+            loader: {
+            display : 'flex',
+            flex : 1,
+            justifyContent : 'center',
+            marginTop : 300
+          }
+  })
 
 
 export default Profile;
