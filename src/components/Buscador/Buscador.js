@@ -15,6 +15,7 @@ class Buscador extends Component {
             usuarios: [],
         }
     }
+    
 
     componentDidMount(){
         db.collection("users").onSnapshot(
@@ -35,7 +36,7 @@ class Buscador extends Component {
 
     busqueda(){
         let filtrado = this.state.backup.filter(fil => {
-            if(fil.data.owner.toLowerCase().includes(this.state.caampoBusqueda.toLowerCase())) {
+            if(fil.data.userName.toLowerCase().includes(this.state.caampoBusqueda.toLowerCase())) {
                 return fil
             }
         console.log('filtrado')
@@ -56,36 +57,47 @@ class Buscador extends Component {
                 
                 <View>
                    <ActivityIndicator size='large' color='white' />
+                   
+                   <Text>NO HAS BUSCADO NADA AÚN</Text>
                </View>
                :
+                <View>
                 <TextInput
                 style= {styles.input}
                 onChangeText={(text)=> this.setState({caampoBusqueda: text})}
                 placeholder='Buscar Perfiles'
                 keyboardType='default'
                 value={this.state.caampoBusqueda}
-                />}
-                <TouchableOpacity style={styles.button} onPress={()=> this.busqueda()}>
+                />
+                </View>
+                }
+
+                <TouchableOpacity style={styles.button} onPress={()=> {
+                    this.busqueda();
+                    }}>
                     <Text>Buscar</Text>
                 </TouchableOpacity>
-                <Text>Resultados de busqueda para: {this.state.caampoBusqueda}</Text>
                 {
                     this.state.filtradoUsers.length > 0 ?
-                        <FlatList
-                        data={this.state.filtradoUsers}
-                        keyExtractor={user => user.id}
-                        renderItem= {({item}) =>
-                            <TouchableOpacity style={styles.button} onPress={() => this.usuarioSeleccionado()}>
-                                <Text>{item.data.userName}</Text>
-                                </TouchableOpacity>
-                        } 
-                        />
-                            
+                        
+                        <View>
+                            <Text>Resultados de busqueda para: {this.state.caampoBusqueda}</Text>  
+                            <FlatList
+                            data={this.state.filtradoUsers}
+                            keyExtractor={user => user.id}
+                            renderItem= {({item}) =>
+                                <TouchableOpacity style={styles.button} onPress={() => this.usuarioSeleccionado()}>
+                                    <Text>{item.data.userName}</Text>
+                                    </TouchableOpacity>
+                            } 
+                            />
+                        </View>     
                         
                     :
+                    <Text>NO HAY USUARIOS PARA ESTA BÚSQUEDA</Text>
                     
-                    <Text>Cargando...</Text>
-                }
+                }        
+                
                 
 
                 
