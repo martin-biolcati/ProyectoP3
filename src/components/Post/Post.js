@@ -80,10 +80,11 @@ class Post extends Component {
         console.log(this.props.dataPost)
         return (
             <View>
-                <Text style={styles.texto}>{ this.props.dataPost.datos.owner }</Text>
-                <Text style={styles.texto}>{ this.props.dataPost.datos.textoPost }</Text>
                 <Image style={styles.image} source={{uri:this.props.dataPost.datos.photo }} resizeMode='contain'/>
-                <Text style={styles.texto}>Cantidad de Likes:{ this.state.cantidadDeLikes }</Text>
+                <Text style={styles.texto}>{ this.props.dataPost.datos.userName }</Text>
+                <Text style={styles.texto}>{ this.props.dataPost.datos.textoPost }</Text>
+                
+                
 
                 <View styles={styles.comentario}>
                     <Text style={styles.texto}><Text style={styles.username}>{this.props.dataPost.datos.owner}</Text></Text>
@@ -101,7 +102,7 @@ class Post extends Component {
                             <Text style={styles.textButton}>Likear</Text>    
                         </TouchableOpacity>
                 }
-
+<Text style={styles.texto}>Cantidad de Likes:{ this.state.cantidadDeLikes }</Text>
 <TextInput
           style={styles.input}
           onChangeText={(texto) => this.setState({ comentarioTexto: texto })}

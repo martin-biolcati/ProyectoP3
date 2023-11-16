@@ -49,8 +49,8 @@ class ProfileUsers extends Component {
                     keyExtractor={unUsuario => unUsuario.id}
                     renderItem={({ item }) =>
                         <View>
-                            <Text>Email:{item.data.owner}</Text>
-                            <Text>Nombre de usuario: {item.data.userName} </Text>
+                            <Text>Email:{item.datos.owner}</Text>
+                            <Text>Nombre de usuario: {item.datos.userName} </Text>
                             <Image
                                 style={styles.postImage}
                                 source={{
