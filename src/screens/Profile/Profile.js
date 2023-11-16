@@ -6,26 +6,13 @@ class Profile extends Component {
     constructor(){
         super()
         this.state={
-           userEnUso:[],
+           userEnUso:{},
            listPost:[]
         }
     }
 
     componentDidMount(){
-         db.collection('posts').where('owner', '==', auth.currentUser.email).onSnapshot(
-             posteos => {
-                 let postsARenderizar = [];
-
-                 posteos.forEach( onePost => {
-                                 postsARenderizar.push(
-                                     {id : onePost.id,
-                                     datos : onePost.data()})})
-
-             this.setState({
-                 listaPost : postsARenderizar
-             })
-         })
-         db.collection('users').where('owner', '==', auth.currentUser.email).onSnapshot(
+        db.collection('users').where('owner', '==', auth.currentUser.email).onSnapshot(
             usuario => {
                 let usuarioIndicado = [];
 
@@ -37,8 +24,24 @@ class Profile extends Component {
             this.setState({
                 userEnUso : usuarioIndicado
             })
-        })}
-         
+            })
+       
+
+        db.collection('posts').where('owner', '==', auth.currentUser.email).orderBy('createdAt', 'desc').onSnapshot(
+            posteos => {
+                let postsARenderizar = [];
+
+                posteos.forEach( onePost => {
+                                postsARenderizar.push(
+                                    {id : onePost.id,
+                                    datos : onePost.data()})})
+
+            this.setState({
+                listaPost : postsARenderizar
+            })
+        })  
+    }
+           
     logout(){
             auth.signOut();
             this.props.navigation.navigate('Login')
@@ -47,9 +50,9 @@ class Profile extends Component {
     render(){
         return(
             <View style={styles.formContainer}>
-                <Text>Nombre del usuario: {this.state.userEnUso[0].user.userName}</Text>
+                {/* <Text>Nombre del usuario: {this.state.userEnUso[0].user.userName}</Text> */}
                 <Text>Email: {auth.currentUser.email}</Text>
-                <Text>Mini Bio: {auth.currentUser.bio}</Text>
+                {/* <Text>Mini Bio: {this.state.userEnUso[0].user.bio}</Text> */}
                 <Text>Foto de perfil: </Text>
                 <Text>Cantidad de Posteos:</Text>
                 <TouchableOpacity onPress={()=>this.logout()}>
