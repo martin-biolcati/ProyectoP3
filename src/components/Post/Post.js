@@ -115,7 +115,7 @@ class Post extends Component {
         {
           this.props.dataPost.datos.comentarios ?
             <Text style={styles.texto}>Cantidad de comentarios: {this.props.dataPost.datos.comentarios.length}</Text> :
-            <Text style={styles.texto}> No hay comentarios en este posteo</Text>
+            <Text style={styles.texto}>No hay comentarios en este posteo</Text>
         }
 
 
@@ -138,7 +138,7 @@ class Post extends Component {
           />
           :
           <Text></Text>
-}
+        }
             </View>
 
         )
@@ -149,13 +149,14 @@ class Post extends Component {
 const styles = StyleSheet.create({
     formContainer:{
       justifyContent: 'space-evenly',
-        borderRadius: 8,
+        borderRadius: 15,
         shadowColor: 'black',
         shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.3,
-        shadowRadius: 3,
+        shadowOpacity: 0.8,
+        shadowRadius: 15,
         elevation: 5,
-          
+        marginBottom: 10,
+        padding: 10,
     }, 
     username: {
       fontSize: 16,
@@ -217,7 +218,7 @@ const styles = StyleSheet.create({
     contenedorNombre:{
       justifyContent:'space-between',
       flex:1,
-      flexDirection: 'row',
+      flexDirection: 'column',
       
     }
     

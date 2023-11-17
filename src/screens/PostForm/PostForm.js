@@ -1,7 +1,7 @@
 import react, { Component } from 'react';
 import {db, auth } from '../../firebase/config';
 import MyCamera from '../../components/MyCamera/MyCamera';
-import {TextInput, TouchableOpacity, View, Text, StyleSheet} from 'react-native';
+import {TextInput, TouchableOpacity, View, Text, StyleSheet, Image} from 'react-native';
 
 class PostForm extends Component {
     constructor(){
@@ -31,9 +31,10 @@ class PostForm extends Component {
     render(){
         return(
             <View style={styles.formContainer}>
-               
-                              
-
+               <Image
+                    style={styles.image} 
+                    source={require('../../../assets/Banner.png')}
+                    resizeMode='contain' />
                 {this.state.showCamera ? <MyCamera onImageUpload={(url)=> this.onImageUpload(url)}/> :
                 
                 <>
@@ -67,7 +68,6 @@ const styles = StyleSheet.create({
     formContainer:{
         flex:1,
         paddingHorizontal:10,
-        marginTop: 20,
         backgroundColor:'grey',
     },
     input:{
@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
         borderStyle: 'solid',
         borderRadius: 6,
         marginVertical:10,
+        color:'white'
     },
     button:{
         backgroundColor:'#28a745',
@@ -92,6 +93,12 @@ const styles = StyleSheet.create({
     },
     textButton:{
         color: '#fff'
+    },
+    image: {
+       height: 50,
+   },
+   texto:{
+        color: 'white',
     }
 
 })

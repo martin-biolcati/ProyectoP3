@@ -1,5 +1,5 @@
 import react, { Component } from 'react';
-import {TextInput, TouchableOpacity, View, Text, StyleSheet, FlatList, ActivityIndicator} from 'react-native';
+import {TextInput, TouchableOpacity, View, Text, StyleSheet, FlatList, ActivityIndicator, Image} from 'react-native';
 import { db, auth } from '../../firebase/config';
 import PostForm from '../PostForm/PostForm';
 import Post from '../../components/Post/Post';
@@ -46,17 +46,22 @@ class Home extends Component {
         console.log(this.state);
         return(
             <View style={styles.contenedor}>
-                <Text style={styles.texto}>Lista de posteos creados</Text>
+                <Image
+                    style={styles.image} 
+                    source={require('../../../assets/Banner.png')}
+                    resizeMode='contain' />
                 {this.state.posts.length === 0 ? 
                 
-                 <View>
+                <View>
                     <ActivityIndicator size='large' color='white' />
                 </View>
                 :
                 <FlatList
                     data={this.state.posts}
                     keyExtractor={ unPost => unPost.id }
-                    renderItem={ ({item}) => <Post dataPost = {item} navigation={this.props.navigation}/>  }/>}
+                    renderItem={ ({item}) => <Post dataPost = {item} navigation={this.props.navigation}/>  }/>
+                    
+                }
             </View>
         )
     }
@@ -65,11 +70,14 @@ class Home extends Component {
 const styles = StyleSheet.create({
     contenedor:{
         flex:1,
-        backgroundColor:'grey',
+        backgroundColor:'grey',       
     },
     texto:{
          color: 'white',
-     }
+     },
+     image: {
+        height: 50,
+    }
 
   })
   

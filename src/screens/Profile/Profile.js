@@ -54,6 +54,10 @@ class Profile extends Component {
     render() {
         return (
           <View style={styles.container}>
+            <Image
+                    style={styles.image} 
+                    source={require('../../../assets/Banner.png')}
+                    resizeMode='contain' />
             {this.state.userEnUso.length > 0 ? (
               <>
                 <View style={styles.flexUno}>
@@ -94,34 +98,37 @@ class Profile extends Component {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      padding : 30,
+      padding : 5,
       backgroundColor: 'grey',
       color : 'white',
     },
     textoBlanco: {
-        color: 'white',
-        },
-      flexUno: {
-        flex : 1,
-        justifyContent: 'space-evenly'
-        },
-        flexDos: {
-          flex : 2
-          },
-        fotoPerfil : {
-            height: 40,
-            width: 40,
-            borderWidth: 1,
-            borderRadius: 25,
-            borderColor: 'rgb(240, 228, 228)',
-            marginRight: 10
-           },
-            loader: {
-            display : 'flex',
-            flex : 1,
-            justifyContent : 'center',
-            marginTop : 300
-          }
+      color: 'white',
+    },
+    flexUno: {
+      flex : 1,
+      justifyContent: 'space-evenly'
+    },
+    flexDos: {
+      flex : 2
+    },
+    fotoPerfil : {
+      height: 40,
+      width: 40,
+      borderWidth: 1,
+      borderRadius: 25,
+      borderColor: 'rgb(240, 228, 228)',
+      marginRight: 10
+    },
+    loader: {
+      display : 'flex',
+      flex : 1,
+      justifyContent : 'center',
+      marginTop : 300
+    },
+    image: {
+      height: 50,
+   }
   })
 
 
