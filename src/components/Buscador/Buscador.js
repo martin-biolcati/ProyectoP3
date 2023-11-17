@@ -75,7 +75,7 @@ class Buscador extends Component {
                         data={this.state.filtradoUsers}
                         keyExtractor={user => user.id}
                         renderItem= {({item}) =>
-                            <TouchableOpacity style={styles.button} onPress={() => this.usuarioSeleccionado()}>
+                            <TouchableOpacity style={styles.button} onPress={() => this.usuarioSeleccionado(item.data.owner)}>
                                 <Text>{item.data.userName}</Text>
                                 </TouchableOpacity>
                         } 
