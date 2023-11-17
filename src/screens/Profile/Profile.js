@@ -96,18 +96,19 @@ const styles = StyleSheet.create({
       flex: 1,
       padding : 30,
       backgroundColor: 'grey',
-      color : 'white'
+      color : 'white',
     },
     textoBlanco: {
         color: 'white',
         },
       flexUno: {
         flex : 1,
+        justifyContent: 'space-evenly'
         },
         flexDos: {
           flex : 2
           },
-          fotoPerfil : {
+        fotoPerfil : {
             height: 40,
             width: 40,
             borderWidth: 1,

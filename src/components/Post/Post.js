@@ -81,10 +81,11 @@ class Post extends Component {
     render(){
         console.log(this.props.dataPost)
         return (
-            <View>
-               <View style={styles.contenedorNombre}>
+            <View style={styles.formContainer}>
+              <View style={styles.contenedorNombre}>
                 <Text style={styles.username}>{ this.props.dataPost.datos.owner }</Text>
-                <Text style={styles.texto}>{ this.props.dataPost.datos.textoPost }</Text></View>
+                <Text style={styles.texto}>{ this.props.dataPost.datos.textoPost }</Text>
+              </View>
                 <Image style={styles.image} source={{uri:this.props.dataPost.datos.photo }} resizeMode='contain'/>
                 <Text style={styles.texto}>Cantidad de Likes:{ this.state.cantidadDeLikes }</Text>
                 <View style={styles.contenedorComentarios}>
@@ -147,11 +148,8 @@ class Post extends Component {
 
 const styles = StyleSheet.create({
     formContainer:{
-        paddingHorizontal:10,
-        marginTop: 20,
+      justifyContent: 'space-evenly',
         borderRadius: 8,
-        margin: 10,
-        padding: 10,
         shadowColor: 'black',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.3,
@@ -182,7 +180,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         borderRadius:4, 
         height : 30,
-        width: 62,
+        width: 40,
     },
     button2:{
       backgroundColor: 'orange',
@@ -190,7 +188,7 @@ const styles = StyleSheet.create({
       borderStyle: 'solid',
       borderRadius: 6,
       height : 30,
-      width: 102,
+      width: 80,
       alignItems: 'center',
       justifyContent: 'center'
     },
@@ -211,14 +209,16 @@ const styles = StyleSheet.create({
       alignItems: 'center',
     },
     contenedorComentarios:{
+      justifyContent: 'space-evenly',
       flexDirection: 'row',
       alignItems: 'center',
-      justifyContent: 'space-around'
+      flexShrink: 20,
     },
     contenedorNombre:{
+      justifyContent:'space-between',
+      flex:1,
       flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between'
+      
     }
     
 
