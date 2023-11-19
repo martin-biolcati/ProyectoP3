@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Image, TextInput,FlatList} from 'react-native';
 import { db, auth } from '../../firebase/config';
 import firebase from 'firebase';
+import { AntDesign } from '@expo/vector-icons'; 
+
 
 class Post extends Component {
 
@@ -79,48 +81,46 @@ class Post extends Component {
     render(){
         console.log(this.props.dataPost)
         return (
-            <View>
-                <Image style={styles.image} source={{uri:this.props.dataPost.datos.photo }} resizeMode='contain'/>
-                <Text style={styles.texto}>{ this.props.dataPost.datos.userName }</Text>
-                <View styles={styles.comentario}>
-                    <Text style={styles.texto}><Text style={styles.username}>{this.props.dataPost.datos.owner}</Text></Text>
-                </View>
+            <View style={styles.formContainer}>
+              <View style={styles.contenedorNombre}>
+                <Text style={styles.username}>{ this.props.dataPost.datos.owner }</Text>
                 <Text style={styles.texto}>{ this.props.dataPost.datos.textoPost }</Text>
-                
-           
-             
+              </View>
+                <Image style={styles.image} source={{uri:this.props.dataPost.datos.photo }} resizeMode='contain'/>
+                <Text style={styles.texto}>Cantidad de Likes:{ this.state.cantidadDeLikes }</Text>
+                <View style={styles.contenedorComentarios}>
                 {
                     this.state.like ?
                         <TouchableOpacity style={styles.button} onPress={()=>this.unlike()}>
-                            <Text style={styles.textButton}>unLike</Text>    
+                            <AntDesign name="heart" size={24} color="red" />    
                         </TouchableOpacity>
-
                         :
-
                         <TouchableOpacity style={styles.button} onPress={()=> this.likear()} >
-                            <Text style={styles.textButton}>Likear</Text>    
+                            <AntDesign name="heart" size={24} color="white" />    
                         </TouchableOpacity>
                 }
-<Text style={styles.texto}>Cantidad de Likes:{ this.state.cantidadDeLikes }</Text>
-<TextInput
-          style={styles.input}
-          onChangeText={(texto) => this.setState({ comentarioTexto: texto })}
-          placeholder="Agregar comentario"
-          keyboardType="default"
-          value={this.state.comentarioTexto}
-        />
-        <TouchableOpacity style={styles.button} onPress={() => this.comentar(this.state.comentarioTexto)}>
-          <Text> Agregar comentario</Text>
-        </TouchableOpacity>
+
+              <TextInput
+                style={styles.input}
+                onChangeText={(texto) => this.setState({ comentarioTexto: texto })}
+                placeholder="Escribe un comentario"
+                keyboardType="default"
+                value={this.state.comentarioTexto}
+              />
+
+              <TouchableOpacity style={styles.button2} onPress={() => this.comentar(this.state.comentarioTexto)}>
+                <Text>  Enviar</Text>
+              </TouchableOpacity>
+              </View>
         {
           this.props.dataPost.datos.comentarios ?
-            <Text>Cantidad de comentarios: {this.props.dataPost.datos.comentarios.length}</Text> :
-            <Text> No hay comentarios en este posteo</Text>
+            <Text style={styles.texto}>Cantidad de comentarios: {this.props.dataPost.datos.comentarios.length}</Text> :
+            <Text style={styles.texto}>No hay comentarios en este posteo</Text>
         }
 
 
         <TouchableOpacity onPress={() => this.setState({ mostrarComentarios: !this.state.mostrarComentarios })}>
-          <Text>
+          <Text style={styles.texto}>
             {this.state.mostrarComentarios ? 'Ocultar Comentarios' : 'Mostrar Comentarios'}
           </Text>
         </TouchableOpacity>
@@ -138,7 +138,7 @@ class Post extends Component {
           />
           :
           <Text></Text>
-}
+        }
             </View>
 
         )
@@ -148,17 +148,15 @@ class Post extends Component {
 
 const styles = StyleSheet.create({
     formContainer:{
-        paddingHorizontal:10,
-        marginTop: 20,
-        borderRadius: 8,
-        margin: 10,
-        padding: 10,
+      justifyContent: 'space-evenly',
+        borderRadius: 15,
         shadowColor: 'black',
         shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.3,
-        shadowRadius: 3,
+        shadowOpacity: 0.8,
+        shadowRadius: 15,
         elevation: 5,
-          
+        marginBottom: 10,
+        padding: 10,
     }, 
     username: {
       fontSize: 16,
@@ -167,41 +165,62 @@ const styles = StyleSheet.create({
       color: 'white'
     },
     input:{
-        height:20,
-        paddingVertical:15,
-        paddingHorizontal: 10,
-        borderWidth:1,
-        borderColor: '#ccc',
-        borderStyle: 'solid',
-        borderRadius: 6,
-        marginVertical:10,
+      color: 'white',
+      height:20,
+      paddingVertical:15,
+      paddingHorizontal: 10,
+      borderWidth:1,
+      borderColor: '#ccc',
+      borderStyle: 'solid',
+      borderRadius: 6,
+      marginVertical:10,
     },
     button:{
-        backgroundColor:'orange',
         paddingHorizontal: 10,
         paddingVertical: 6,
         textAlign: 'center',
         borderRadius:4, 
-        borderWidth:1,
-        borderStyle: 'solid',
-        borderColor: 'orange',
+        height : 30,
+        width: 40,
+    },
+    button2:{
+      backgroundColor: 'orange',
+      borderColor: '#ccc',
+      borderStyle: 'solid',
+      borderRadius: 6,
+      height : 30,
+      width: 80,
+      alignItems: 'center',
+      justifyContent: 'center'
     },
     textButton:{
         color: '#fff'
     },
     image: {
-        height: 400,
+        height: 300,
        },
-       texto:{
+    texto:{
         color: 'white',
     },
     textButton: {
         color: 'white'
       },
-      comentario: {
-        flexDirection: 'row',
-        alignItems: 'center',
-      }
+    comentario: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    contenedorComentarios:{
+      justifyContent: 'space-evenly',
+      flexDirection: 'row',
+      alignItems: 'center',
+      flexShrink: 20,
+    },
+    contenedorNombre:{
+      justifyContent:'space-between',
+      flex:1,
+      flexDirection: 'column',
+      
+    }
     
 
      

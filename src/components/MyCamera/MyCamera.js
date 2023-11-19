@@ -80,7 +80,7 @@ class MyCamera extends Component{
                     </TouchableOpacity>
                 </View>
                 :
-                <Text>No tenes permisos de la camara</Text>
+                <Text style={styles.texto}>No tenes permisos de la camara</Text>
                 }
             </>
         )
@@ -119,6 +119,9 @@ const styles = StyleSheet.create({
     textButton: {
       color: "#fff",
     },
+    texto:{
+         color: 'white',
+     }
   });
 
 

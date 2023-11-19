@@ -1,6 +1,6 @@
 import react, { Component } from 'react';
 import {db, auth } from '../../firebase/config';
-import {TextInput, TouchableOpacity, View, Text, StyleSheet,FlatList, ActivityIndicator} from 'react-native';
+import {TextInput, TouchableOpacity, View, Text, StyleSheet,FlatList, ActivityIndicator, Image} from 'react-native';
 
 
 class Buscador extends Component {
@@ -53,6 +53,10 @@ class Buscador extends Component {
    render(){
         return(
             <View style={styles.formContainer}>
+                <Image
+                    style={styles.image} 
+                    source={require('../../../assets/Banner.png')}
+                    resizeMode='contain' />
                 {this.state.backup === 0 ? 
                 
                 <View>
@@ -75,26 +79,26 @@ class Buscador extends Component {
                 <TouchableOpacity style={styles.button} onPress={()=> {
                     this.busqueda();
                     }}>
-                    <Text>Buscar</Text>
+                    <Text style={styles.texto}>Buscar</Text>
                 </TouchableOpacity>
                 {
                     this.state.filtradoUsers.length > 0 ?
                         
                         <View>
-                            <Text>Resultados de busqueda para: {this.state.caampoBusqueda}</Text>  
+                            <Text style={styles.texto}>Resultados de busqueda para: {this.state.caampoBusqueda}</Text>  
                             <FlatList
                             data={this.state.filtradoUsers}
                             keyExtractor={user => user.id}
                             renderItem= {({item}) =>
                                 <TouchableOpacity style={styles.button} onPress={() => this.usuarioSeleccionado()}>
-                                    <Text>{item.data.userName}</Text>
+                                    <Text style={styles.texto}>{item.data.userName}</Text>
                                     </TouchableOpacity>
                             } 
                             />
                         </View>     
                         
                     :
-                    <Text>NO HAY USUARIOS PARA ESTA BÚSQUEDA</Text>
+                    <Text style={styles.texto}>NO HAY USUARIOS PARA ESTA BÚSQUEDA</Text>
                     
                 }        
                 
@@ -110,7 +114,7 @@ class Buscador extends Component {
 const styles = StyleSheet.create({
     formContainer:{
         flex:1,
-        paddingHorizontal:600,
+        paddingHorizontal:5,
         marginTop: 20,
         backgroundColor:'grey',
     },
@@ -123,6 +127,7 @@ const styles = StyleSheet.create({
         borderStyle: 'solid',
         borderRadius: 6,
         marginVertical:10,
+        color:'white'
     },
     button:{
         backgroundColor:'orange',
@@ -136,6 +141,12 @@ const styles = StyleSheet.create({
     },
     textButton:{
         color: '#fff'
+    },
+    image: {
+      height: 50,
+   },
+   texto:{
+        color: 'white',
     }
 
 })
