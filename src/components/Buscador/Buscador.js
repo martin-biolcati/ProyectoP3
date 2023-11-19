@@ -10,7 +10,7 @@ class Buscador extends Component {
             backup: [],
             caampoBusqueda: "",
             filtradoUsers: [],
-            userId: "",
+            id: "",
             infoUser: null,
             usuarios: [],
         }
@@ -92,7 +92,7 @@ class Buscador extends Component {
                             renderItem= {({item}) =>
                             <TouchableOpacity
                                 style={styles.button}
-                                onPress={() => this.props.navigation.navigate("ProfileUsers", { userData: item.data })}>
+                                onPress={() => this.usuarioSeleccionado(item.data.owner)}>
                                 <Text style={styles.texto}>{item.data.userName}</Text>
                             </TouchableOpacity>
                             } 

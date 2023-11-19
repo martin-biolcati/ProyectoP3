@@ -4,18 +4,40 @@ import MyCamera from '../../components/MyCamera/MyCamera';
 import {TextInput, TouchableOpacity, View, Text, StyleSheet, Image} from 'react-native';
 
 class PostForm extends Component {
-    constructor(){
-        super()
-        this.state={
-           textoPost:'',
-           showCamera: true,
-           url: '',
+    constructor(props) {
+        super();
+        this.state = {
+            textPost: "",
+            urlPost: '',
+            usuario: auth.currentUser.email,
+            usuarios: [],
+            showCamera: true,
         }
+        console.log(this.state.textPost)
     }
 
+
+    componentDidMount() {
+        db.collection('users').where("owner", "==", this.state.usuario).onSnapshot(
+            docs => {
+                let ahoraUsuario = [];
+                docs.forEach(doc => {
+                    ahoraUsuario.push({
+                        id: doc.id,
+                        data: doc.data()
+                    })
+                    this.setState({ usuarios: ahoraUsuario })
+                })
+            }
+        )
+    }
     crearPost(){
+        const userName = this.state.usuarios.length > 0 ? this.state.usuarios[0].data.userName : ''
+        const fotoPerfil = this.state.usuarios.length > 0 ? this.state.usuarios[0].data.fotoPerfil : '';
         db.collection('posts').add({
-            owner: auth.currentUser.email,
+            userName: userName,
+            fotoPerfil: fotoPerfil,
+            owner: this.state.usuario,
             textoPost: this.state.textoPost,
             createdAt: Date.now(), 
             photo: this.state.url,

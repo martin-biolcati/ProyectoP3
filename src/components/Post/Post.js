@@ -83,7 +83,16 @@ class Post extends Component {
         return (
             <View style={styles.formContainer}>
               <View style={styles.contenedorNombre}>
-                <Text style={styles.username}>{ this.props.dataPost.datos.owner }</Text>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate("Profile")}>
+              <Image
+            style={styles.fotoPerfil}
+            source={{
+              uri: this.props.dataPost.datos.fotoPerfil
+            }}
+          /></TouchableOpacity>
+                  <TouchableOpacity onPress={() => this.props.navigation.navigate("Profile")}>
+                <Text style={styles.username}>{ this.props.dataPost.datos.userName }</Text>
+                </TouchableOpacity>
                 <Text style={styles.texto}>{ this.props.dataPost.datos.textoPost }</Text>
               </View>
                 <Image style={styles.image} source={{uri:this.props.dataPost.datos.photo }} resizeMode='contain'/>
@@ -157,7 +166,14 @@ const styles = StyleSheet.create({
         elevation: 5,
         marginBottom: 10,
         padding: 10,
-    }, 
+    }, fotoPerfil :{
+      width: 50,
+      height: 50,
+      borderRadius: 25,
+      borderWidth: 2,
+      borderColor: '#fff',
+      marginRight: 10,
+  },
     username: {
       fontSize: 16,
       fontWeight: 'bold',

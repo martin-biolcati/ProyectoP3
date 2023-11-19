@@ -67,6 +67,7 @@ class Profile extends Component {
                   <Text style={styles.textoBlanco}>
                     Email: {auth.currentUser.email}
                   </Text>
+                  <Image style={styles.fotoPerfil} source={{ uri: this.state.userEnUso[0].user.fotoPerfil }} />
                    <Text style={styles.textoBlanco}>Mini bio: {this.state.userEnUso[0].user.bio}</Text> 
                      {/* <Image style={styles.fotoPerfil}  source={{uri:''}} resizeMode='contain'/>   */}
                   <TouchableOpacity onPress={() => this.logout()}>
@@ -112,14 +113,15 @@ const styles = StyleSheet.create({
     flexDos: {
       flex : 2
     },
-    fotoPerfil : {
-      height: 40,
-      width: 40,
-      borderWidth: 1,
+    fotoPerfil :{
+      width: 50,
+      height: 50,
       borderRadius: 25,
-      borderColor: 'rgb(240, 228, 228)',
-      marginRight: 10
-    },
+      borderWidth: 2,
+      borderColor: '#fff',
+      marginRight: 10,
+  },
+
     loader: {
       display : 'flex',
       flex : 1,

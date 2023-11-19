@@ -1,6 +1,7 @@
 import react, { Component } from "react";
 import { auth, db } from "../../firebase/config";
 import {TextInput,TouchableOpacity,View,Text,StyleSheet,FlatList,Image} from "react-native";
+import Post from '../../components/Post/Post';
 
 class ProfileUsers extends Component {
     constructor(props) {
@@ -18,20 +19,20 @@ class ProfileUsers extends Component {
                 docs.forEach(doc => {
                     usuario.push({
                         id: doc.id,
-                        data: doc.data()
+                        datos: doc.data()
                     })
                 })
                 this.setState({ usuarios: usuario })
 
             })
 
-        db.collection("posts").where("owner", "==", this.props.route.params).onSnapshot(
+        db.collection("posts").where("owner", "==", this.props.route.params).orderBy('createdAt', 'desc').onSnapshot(
             docs => {
                 let posteos = [];
                 docs.forEach(doc => {
                     posteos.push({
                         id: doc.id,
-                        data: doc.data()
+                        datos: doc.data()
                     })
                 })
                 this.setState({ listaDePosteos: posteos })
@@ -43,35 +44,35 @@ class ProfileUsers extends Component {
     render() {
         console.log(this.state.listaDePosteos)
         return (
-            <View>
+            <View style={styles.container}>
+                <View style={styles.flexUno}>
                 <FlatList
                     data={this.state.usuarios}
                     keyExtractor={unUsuario => unUsuario.id}
                     renderItem={({ item }) =>
                         <View>
-                            <Text>Email:{item.datos.owner}</Text>
-                            <Text>Nombre de usuario: {item.datos.userName} </Text>
+                            <Text style={styles.textoBlanco}>Email:{item.datos.owner}</Text>
+                            <Text style={styles.textoBlanco}>Nombre de usuario: {item.datos.userName} </Text>
                             <Image
-                                style={styles.postImage}
+                                style={styles.fotoPerfil}
                                 source={{
-                                    uri: item.data.urlImagen
+                                    uri: item.datos.fotoPerfil
                                 }} />
                         </View>
                     }
+                    
                 />
+                </View >
                 {
-                    this.state.listaDePosteos ==0 ?
-                    <Text> Este usuario no tiene nigun posteo</Text> :
+                    this.state.listaDePosteos.length ==0 ?
+                    <Text style={styles.textoBlanco}> Este usuario no tiene nigun posteo</Text> :
+                    <View style={styles.flexDos}> 
                         <FlatList
                             data={this.state.listaDePosteos}
                             keyExtractor={unPost => unPost.id}
                             renderItem={({ item }) =>
-                                <View>
-                                    <Text> {item.data.textPost} </Text>
-                                    <Text> {item.data.owner}</Text>
-                                </View>
-                            }
-                        />  
+                            <Post dataPost={item} navigation={this.props.navigation} />}
+                            /></View>
                 }
 
             </View>
@@ -80,21 +81,23 @@ class ProfileUsers extends Component {
 }
 
 const styles = StyleSheet.create({
-    username: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        marginRight: 10,
-    },
-    input: {
-        height: 20,
-        paddingVertical: 15,
-        paddingHorizontal: 10,
-        borderWidth: 1,
-        borderColor: "#ccc",
-        borderStyle: 6,
-        marginVertical: 10,
-    },
-    profileImage: {
+    container: {
+        flex: 1,
+        padding : 5,
+        backgroundColor: 'grey',
+        color : 'white',
+      },
+      textoBlanco: {
+        color: 'white',
+      },
+      flexUno: {
+        flex : 1,
+        justifyContent: 'space-evenly'
+      },
+      flexDos: {
+        flex : 2
+      },
+      fotoPerfil :{
         width: 50,
         height: 50,
         borderRadius: 25,
@@ -102,10 +105,16 @@ const styles = StyleSheet.create({
         borderColor: '#fff',
         marginRight: 10,
     },
-    postImage: {
-        width: '100%',
-        height: 200,
-    }
-})
+  
+      loader: {
+        display : 'flex',
+        flex : 1,
+        justifyContent : 'center',
+        marginTop : 300
+      },
+      image: {
+        height: 50,
+     }
+    })
 
 export default ProfileUsers
