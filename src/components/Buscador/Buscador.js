@@ -90,9 +90,11 @@ class Buscador extends Component {
                             data={this.state.filtradoUsers}
                             keyExtractor={user => user.id}
                             renderItem= {({item}) =>
-                                <TouchableOpacity style={styles.button} onPress={() => this.usuarioSeleccionado()}>
-                                    <Text style={styles.texto}>{item.data.userName}</Text>
-                                    </TouchableOpacity>
+                            <TouchableOpacity
+                                style={styles.button}
+                                onPress={() => this.props.navigation.navigate("ProfileUsers", { userData: item.data })}>
+                                <Text style={styles.texto}>{item.data.userName}</Text>
+                            </TouchableOpacity>
                             } 
                             />
                         </View>     

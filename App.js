@@ -8,6 +8,7 @@ import PostForm from './src/screens/PostForm/PostForm';
 import Menu from './src/components/Menu/Menu';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import ProfileUsers from './src/screens/ProfileUsers/ProfileUsers';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,6 +20,7 @@ export default function App() {
       <Stack.Screen name='Register' component={ Register } options={{headerShown : false}}  />
       <Stack.Screen name='Login'component={ Login } options={{headerShown : false}} />
       <Stack.Screen name='Menu'component={ Menu } options={{headerShown : false}} />
+      <Stack.Screen name='ProfileUsers'component={ ProfileUsers } options={{headerShown : false}} />
     </Stack.Navigator>
   </NavigationContainer>
   );
