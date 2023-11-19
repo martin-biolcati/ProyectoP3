@@ -82,14 +82,13 @@ class Post extends Component {
             <View>
                 <Image style={styles.image} source={{uri:this.props.dataPost.datos.photo }} resizeMode='contain'/>
                 <Text style={styles.texto}>{ this.props.dataPost.datos.userName }</Text>
-                <Text style={styles.texto}>{ this.props.dataPost.datos.textoPost }</Text>
-                
-                
-
                 <View styles={styles.comentario}>
                     <Text style={styles.texto}><Text style={styles.username}>{this.props.dataPost.datos.owner}</Text></Text>
                 </View>
-
+                <Text style={styles.texto}>{ this.props.dataPost.datos.textoPost }</Text>
+                
+           
+             
                 {
                     this.state.like ?
                         <TouchableOpacity style={styles.button} onPress={()=>this.unlike()}>

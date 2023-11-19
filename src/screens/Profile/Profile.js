@@ -53,23 +53,25 @@ class Profile extends Component {
 
     render() {
         return (
-          <View style={styles.container}>
-            {this.state.userEnUso.length > 0 ? (
-              <>
-                <View style={styles.flexUno}>
-                  <Text style={styles.textoBlanco}>
-                      Nombre de usuario: {this.state.userEnUso[0].user.userName}  
-                  </Text>
-                  <Text style={styles.textoBlanco}>
-                    Email: {auth.currentUser.email}
-                  </Text>
-                   <Text style={styles.textoBlanco}>Mini bio: {this.state.userEnUso[0].user.bio}</Text> 
-                     {/* <Image style={styles.fotoPerfil}  source={{uri:''}} resizeMode='contain'/>   */}
-                  <TouchableOpacity onPress={() => this.logout()}>
-                  <Text style={styles.textoBlanco}>Logout</Text>
-                </TouchableOpacity>
-                </View>
-      
+          <View style={styles.container}>{this.state.userEnUso.length > 0 ? (
+            <>
+              <View style={styles.flexUno}>
+                <Text style={styles.textoBlanco}>
+                    Nombre de usuario: {this.state.userEnUso[0].user.userName}  
+                </Text>
+                <Text style={styles.textoBlanco}>
+                  Email: {auth.currentUser.email}
+                </Text>
+                
+                 <Text style={styles.textoBlanco}>Mini bio: {this.state.userEnUso[0].user.bio}</Text> 
+                  
+                <TouchableOpacity onPress={() => this.logout()}>
+                <Text style={styles.textoBlanco}>Logout</Text>
+              </TouchableOpacity>
+              </View>
+    
+
+
                 <View style={styles.flexDos}> 
                  <FlatList
                     data={this.state.listaPost}
