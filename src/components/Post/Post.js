@@ -16,7 +16,6 @@ class Post extends Component {
             comentarioTexto: "",
             comentarios: [],
             mostrarComentarios: false,
-            // cantComentarios: this.props.dataPost.datos.comentarios.length
         }
     }
 
@@ -51,7 +50,6 @@ class Post extends Component {
     }
 
     unlike(){
-        //Quita un email en la propiedad like del post.
         db.collection('posts').doc(this.props.dataPost.id).update({
             likes:firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email)
         })
@@ -83,14 +81,14 @@ class Post extends Component {
         return (
             <View style={styles.formContainer}>
               <View style={styles.contenedorNombre}>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate("Profile")}>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('ProfileUsers', this.props.dataPost.datos.owner)}>
               <Image
             style={styles.fotoPerfil}
             source={{
               uri: this.props.dataPost.datos.fotoPerfil
             }}
           /></TouchableOpacity>
-                  <TouchableOpacity onPress={() => this.props.navigation.navigate("Profile")}>
+                  <TouchableOpacity onPress={() => this.props.navigation.navigate('ProfileUsers', this.props.dataPost.datos.owner)}>
                 <Text style={styles.username}>{ this.props.dataPost.datos.userName }</Text>
                 </TouchableOpacity>
                 <Text style={styles.texto}>{ this.props.dataPost.datos.textoPost }</Text>
@@ -236,10 +234,7 @@ const styles = StyleSheet.create({
       flex:1,
       flexDirection: 'column',
       
-    }
-    
-
-     
+    }     
 })
 
 export default Post;

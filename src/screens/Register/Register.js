@@ -58,7 +58,7 @@ class Register extends Component {
                         auth.signOut();
                     })
                     .then(() => {
-                        this.props.navigation.navigate('Menu');
+                        this.props.navigation.navigate('Login');
                     })
             })
             .catch( error => {
@@ -136,7 +136,7 @@ class Register extends Component {
 
 const styles = StyleSheet.create({
     formContainer:{
-        paddingHorizontal:600,
+        paddingHorizontal:5,
         marginTop: 20,
     },
     input:{

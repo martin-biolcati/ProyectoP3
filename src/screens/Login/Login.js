@@ -8,7 +8,8 @@ class Login extends Component {
         this.state={
             email:'',
             password:'',
-            logueado: false
+            logueado: false,
+            error:''
         }
     }
     componentDidMount() {
@@ -29,6 +30,14 @@ class Login extends Component {
                 this.props.navigation.navigate('Menu')
             })
             .catch( error => {
+                let mensajeError =  'Fallo en el registro.'
+                if (error.code == 'auth/internal-error') {
+                    mensajeError = 'Los datos ingresados no coinciden con un usuario registrado'
+                  }
+                  else {
+                    mensajeError = 'Verifica tu mail'
+                }
+                this.setState({ error: mensajeError });
                 console.log(error);
             })
     
@@ -54,6 +63,9 @@ class Login extends Component {
                     secureTextEntry={true}
                     value={this.state.password}
                 />
+                {this.state.error ? (
+                        <Text style={styles.error}>{this.state.error}</Text>
+                    ) : null}
                 <TouchableOpacity style={styles.button} onPress={()=>this.login(this.state.email, this.state.password)}>
                     <Text style={styles.textButton}>Ingresar</Text>    
                 </TouchableOpacity>
@@ -67,7 +79,7 @@ class Login extends Component {
 
 const styles = StyleSheet.create({
     formContainer:{
-        paddingHorizontal:600,
+        paddingHorizontal:5,
         marginTop: 20,
     },
     input:{
@@ -92,6 +104,11 @@ const styles = StyleSheet.create({
     },
     textButton:{
         color: '#fff'
+    },
+    error:{
+        color: 'red',
+        fontSize: 16,
+        textAlign: 'center'
     }
 
 })
